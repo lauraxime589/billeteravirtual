@@ -21,7 +21,7 @@ public class BilleteraVirtual  {
 
     public void recargarSaldo(double monto) throws Exception {
         if (monto <= 0) {
-            throw new Exception ("Ingrese un monto positivo");
+            throw new Exception ("Ingrese un monto positivo para hacer la transacción");
 
 
         }
