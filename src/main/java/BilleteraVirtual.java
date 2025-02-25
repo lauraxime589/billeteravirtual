@@ -1,78 +1,132 @@
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BilleteraVirtual  {
+public class BilleteraVirtual {
+    private String numeroBilletera;
+    private double saldo;
+    private List<Transaccion> transacciones;
+    private Usuario usuario;
+    private LocalDateTime fecha;
 
-
-        private static long contadorBilletera = 10000000000L;
-        private String numeroBilletera;
-        private double saldo;
-        private List<Transaccion> transacciones;
-        private Usuario usuario;
-
-
-        public BilleteraVirtual() {
-
-            this.numeroBilletera = generarNumeroBilletera();
-            this.saldo = 0.0;
-            this.transacciones = new ArrayList<>();
-        }
-
-
-    public void recargarSaldo(double monto) throws Exception {
-        if (monto <= 0) {
-            throw new Exception ("Ingrese un monto positivo para hacer la transacción");
-
-
-        }
-        saldo += monto;
-        transacciones.add(new Transaccion(monto));
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public boolean transferir(double monto, String destinatario, String categoria) throws Exception {
-        if (monto <= 0) {
-            throw new Exception ("ingrese un monto positivo");
-        }
-
-        double costoTransaccion = 200.0;
-        if (monto + costoTransaccion > saldo) {
-            throw new Exception ("saldo Insifuciente ");
-        }
-
-        saldo -= (monto+costoTransaccion);
-        transacciones.add(new Transaccion(monto, destinatario, categoria));
-        return true;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
-
-
-    public double consultarSaldo() {
-        return saldo;
+    public BilleteraVirtual(Usuario usuario) {
+        this.usuario = usuario;
     }
 
-    public void mostrarTransacciones() throws Exception {
-        if (transacciones.isEmpty()) {
-            throw new Exception ("No hay transacciones");
-        }
-        for (Transaccion t : transacciones) {
-            System.out.println(t);
-        }
+    public BilleteraVirtual(){
+        this.numeroBilletera = generarNumeroBilletera();
+        this.saldo=0.0;
+        this.transacciones=new ArrayList<Transaccion>();
 
     }
-    private String generarNumeroBilletera () {
-        contadorBilletera++;
 
-        String numero = Long.toString(BilleteraVirtual.contadorBilletera);
-        while (numero.length() < 10) {
-            numero = "0" + numero;
-        }
-        return numero;
-
+    //método para generar el numero de billetera
+    private String generarNumeroBilletera(){
+        long numero = (long)(Math.random()*9000000000L)+1000000000L;
+        return String.valueOf(numero);
     }
-    public String getNumeroBilletera () {
+
+    public String getNumeroBilletera() {
         return numeroBilletera;
     }
 
+    public void setNumeroBilletera(String numeroBilletera) {
+        this.numeroBilletera = numeroBilletera;
+    }
+
+    public BilleteraVirtual(String numeroBilletera, double saldo, List<Transaccion> transacciones) {
+        this.numeroBilletera = numeroBilletera;
+        this.saldo = saldo;
+        this.transacciones = transacciones;
+    }
+
+    public double getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
+    }
+
+    public List<Transaccion> getTransacciones() {
+        return transacciones;
+    }
+
+    public void setTransacciones(List<Transaccion> transacciones) {
+        this.transacciones = transacciones;
+    }
+
+    //método para recargar saldo
+    public void recargarSaldo(double monto) throws Exception{
+        if (monto<=0){
+            throw new Exception("Ingrese un monto de dinero positivo");
+        }
+        saldo+=monto;
+        transacciones.add(new Transaccion(monto));
+    }
+
+    //método para consultar saldo
+    public double consultarSaldo(){
+        return saldo;
+    }
+
+    //método para mostrar transacciones
+    public void mostrarTransacciones() throws Exception{
+        if (transacciones.isEmpty()){
+            throw new Exception("No se puede mostrar la lista de transacciones");
+        }
+        for (Transaccion t : transacciones){
+            System.out.println(t);
+        }
+
+
+    }
+    //método para consultar transacciones en un tiempo determinado
+    public List<Transaccion> consultarTransaccionesPorPeriodo(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
+        List<Transaccion> transaccionesEnPeriodo = new ArrayList<>();
+        for (Transaccion t : transacciones){
+            LocalDateTime fechaTransaccion = transacciones.getFirst().getFecha();
+            if ((fechaTransaccion.isEqual(fechaInicio) || fechaTransaccion.isAfter(fechaInicio)) &&
+                    (fechaTransaccion.isEqual(fechaFin) || fechaTransaccion.isBefore(fechaFin))){
+                transaccionesEnPeriodo.add(t);
+            }
+        }
+        return transaccionesEnPeriodo;
+    }
+
+    //método para obtener porcentaje de gastos e ingresos
+
+    /*public void calcularPorcentajeGastosMensuales(int mes){
+        double totalGastos = 0;
+        double totalTransacciones = 0;
+        for (Transaccion t : transacciones){
+            if (transacciones.getFirst().getMonthValue()== mes){
+                totalTransacciones += Math.abs(transacciones.getMonto());
+                if (transacciones.getMonto() < 0){
+                    totalGastos += Math.abs(transacciones.getMonto());
+                }
+            }
+        }
+        if (totalTransacciones==0){
+            return 0;
+        }
+        return (totalGastos/totalTransacciones)*100;
+    }*/
+
 }
+
+
+
+
+
+
 
 
