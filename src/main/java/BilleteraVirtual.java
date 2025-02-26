@@ -102,24 +102,7 @@ public class BilleteraVirtual {
         return transaccionesEnPeriodo;
     }
 
-    //método para obtener porcentaje de gastos e ingresos
 
-    /*public void calcularPorcentajeGastosMensuales(int mes){
-        double totalGastos = 0;
-        double totalTransacciones = 0;
-        for (Transaccion t : transacciones){
-            if (transacciones.getFirst().getMonthValue()== mes){
-                totalTransacciones += Math.abs(transacciones.getMonto());
-                if (transacciones.getMonto() < 0){
-                    totalGastos += Math.abs(transacciones.getMonto());
-                }
-            }
-        }
-        if (totalTransacciones==0){
-            return 0;
-        }
-        return (totalGastos/totalTransacciones)*100;
-    }*/
 
 }
 

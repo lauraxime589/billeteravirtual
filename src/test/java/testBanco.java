@@ -17,13 +17,6 @@ public class testBanco {
             transacciones.add(new Transaccion(3000));
         });
     }
-    @Test
-    public void testTransferir2() {
-        Banco banco = new Banco();
-        banco.transferir("1909", "-099", "Fecha y hora actual:" +, "sofia", "laura", "VIAJES" );
-        boolean transferir = testTransferir2(assertFalse(false);)
-
-    }
 
     @Test
     public void registrarUsuarioTest() {
@@ -74,18 +67,30 @@ public class testBanco {
     }
     @Test
     public void eliminarTest(){
+
+        Banco banco = new Banco();
+
+        Usuario usuario1 = banco.buscarPorId("123");
         // Se espera que no se lance ninguna excepción al eliminar el usuario con ID 123
         assertDoesNotThrow( () -> {
-            Banco.re("123");
+            banco.eliminar("123");
         } );
 
-        // Se espera que el usuario con ID 123 no exista
-        Usuario usuario  = Usuario.getId("123");
-        assertNull(usuario);
+        // Se espera que el estudiante con ID 123 no exista
+        Usuario usuario = banco.buscarPorId("123");
+        assertNull(usuario1);
+    }
+    @Test
+    public void testTransferir2() {
+        Banco banco = new Banco();
+        boolean transferir = banco.transferir("1909", "-099", "Fecha y hora actual:" + LocalDateTime.now(), "laura", "sofia", "VIAJES");
+        assertFalse(transferir);
+
     }
 
+
 }
-}
+
 
 
 
