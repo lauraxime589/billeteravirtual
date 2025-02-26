@@ -9,17 +9,11 @@ public class Transaccion {
     private BilleteraVirtual receptor;
     private Categoria categoria;
 
-    public Transaccion(String tipo, double monto, String emisor, String receptor) {
-        this.id = id;
-        this.monto = monto;
-        this.fecha = LocalDateTime.now();
-
-    }
 
     public Transaccion(String id, double monto, LocalDateTime fecha, BilleteraVirtual emisor, BilleteraVirtual receptor, Categoria categoria) {
         this.id = id;
         this.monto = monto;
-        this.fecha = fecha;
+        this.fecha = LocalDateTime.now();
         this.emisor = emisor;
         this.receptor = receptor;
         this.categoria = categoria;

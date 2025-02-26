@@ -1,3 +1,4 @@
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class Banco {
     }
 
     //método para transferir dinero a otras billeteras
-    public boolean transferir(double monto, BilleteraVirtual emisor, BilleteraVirtual receptor) throws Exception {
+    public boolean transferir (String id, double monto, LocalDateTime fecha,  BilleteraVirtual emisor, BilleteraVirtual receptor, Categoria categoria) throws Exception {
         if (monto <= 0) {
             throw new Exception("monto invalido, ingrese un monto de dinero positivo");
 
@@ -34,12 +35,15 @@ public class Banco {
         if (monto + costoTransaccion > saldo)
             throw new Exception("saldo insuficiente para transferir");
 
+
         saldo -= (monto + costoTransaccion);
         transacciones.add(new Transaccion(monto));
 
         return true;
 
+
     }
+
 
     public Banco(List<Usuario> usuarios, List<BilleteraVirtual> billeteras, double saldo, double monto, List<Transaccion> transacciones) {
         this.usuarios = usuarios;
@@ -50,10 +54,11 @@ public class Banco {
     }
 
     //método para registarr usuario y su billetera
-    public void registarUsuario(String id, String nombre, String contraseña, String correo) throws Exception {
+    public void registarUsuario(String id, String nombre, String direccion, String contrasena, String correo) throws Exception {
         if (buscarPorId(id) != null) {
             throw new Exception("Usuario ya existe");
         }
+        usuarios.add( new Usuario(id, nombre, direccion, correo, contrasena) );
 
     }
 
@@ -70,7 +75,7 @@ public class Banco {
     //método para buscar usuario por contraseña
     public Usuario buscarPorContraseña(String contraseña) {
         for (Usuario usuario : usuarios)
-            if (usuario.getContraseña().equals(contraseña))
+            if (usuario.getContrasena().equals(contraseña))
                 return usuario;
 
 
@@ -86,7 +91,7 @@ public class Banco {
             throw new Exception("Usuario no encontrado");
 
         }
-        if(! usuario.getContraseña().equals(contraseña)){
+        if(! usuario.getContrasena().equals(contraseña)){
             throw new Exception("La contraseña es incorrecta");
         }
         for(BilleteraVirtual billetera : billeteras){
@@ -103,6 +108,17 @@ public class Banco {
 
 
     }
+    public void eliminar(String id) throws Exception{
+        Usuario usuario = buscarPorId(id);
+
+        // Si el usuario no existe, lanzar una excepción
+        if(usuario==null){
+            throw new Exception("No existe un usuario con el ID dado");
+        }else{
+            Usuario.remove(usuario);
+        }
+    }
+
 
 }
 

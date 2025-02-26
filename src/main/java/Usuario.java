@@ -3,11 +3,14 @@ public class Usuario {
     private String id;
     private String direccion;
     private String email;
-    private String contraseña;
+    private String contrasena;
     private Usuario usuario;
 
     public Usuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public static void remove(Usuario usuario) {
     }
 
     public Usuario getUsuario() {
@@ -18,22 +21,23 @@ public class Usuario {
         this.usuario = usuario;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasena() {
+        return contrasena;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setContraseña(String contrasena) {
+        this.contrasena = contrasena;
     }
 
-    public Usuario(String contraseña) {
-        this.contraseña = contraseña;
+    public Usuario(String contrasena) {
+        this.contrasena = contrasena;
     }
 
-    public Usuario(String nombre, String id, String direccion, String email) {
+    public Usuario(String id, String nombre, String direccion, String contrasena, String email) {
         this.nombre = nombre;
         this.id = id;
         this.direccion = direccion;
+        this.contrasena = contrasena;
         this.email = email;
     }
 
