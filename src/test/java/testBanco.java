@@ -76,7 +76,7 @@ public class testBanco {
     public void eliminarTest(){
         // Se espera que no se lance ninguna excepción al eliminar el usuario con ID 123
         assertDoesNotThrow( () -> {
-            Banco.eliminar("123");
+            Banco.re("123");
         } );
 
         // Se espera que el usuario con ID 123 no exista

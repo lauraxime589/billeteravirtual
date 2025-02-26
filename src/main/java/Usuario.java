@@ -13,6 +13,7 @@ public class Usuario {
     public static void remove(Usuario usuario) {
     }
 
+
     public Usuario getUsuario() {
         return usuario;
     }
